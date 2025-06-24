@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
 from datetime import datetime, time
+import pytz
 from io import BytesIO
 from db_connection import get_connection
 
@@ -260,7 +261,11 @@ def export_excel(df, filename):
 # ==================== MENU: INPUT ==================== #
 def menu_data_pelayanan():
     st.title("Input Data Pengguna")
-    now = datetime.now()
+    
+    # Gunakan waktu Jakarta
+    jakarta_tz = pytz.timezone('Asia/Jakarta')
+    now = datetime.now(pytz.utc).astimezone(jakarta_tz)
+    
     bulan = now.strftime("%B")
     tahun = now.strftime("%Y")
     hari_tanggal = now.date()
@@ -271,7 +276,7 @@ def menu_data_pelayanan():
             "Tidak Tersedia"
 
     if waktu == "Tidak Tersedia":
-        st.warning("Waktu input tidak sesuai shift.")
+        st.warning("Waktu input tidak sesuai shift.") 
 
     nama = st.text_input("Nama Pemilik")
     daerah = st.selectbox("Daerah", DAERAH_LIST)
