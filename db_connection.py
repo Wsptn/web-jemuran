@@ -2,8 +2,9 @@ import mysql.connector
 
 def get_connection():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",  # sesuai XAMPP
-        database="jemuran_db"
+        host="sql12.freesqldatabase.com",
+        user="sql12786635",
+        password="jtMnHixJ9S",
+        database="sql12786635",
+        port=3306
     )
