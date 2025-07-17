@@ -235,7 +235,7 @@ def simpan_data_pelayanan(data):
         query = """
             INSERT INTO data_pelayanan (
                 nama_pemilik, daerah, kamar, bulan, tahun, hari_tanggal, waktu,
-                baju, sarung, celana, kopyah,
+                baju, sarung, celana, jenis_lainnya,
                 jepit, hanger, timba,
                 no_kartu, relokasi, ambil
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'Tidak')
@@ -451,7 +451,7 @@ def export_excel(df, filename):
     sheet.write("B1", total_pengguna)
 
     # 2. Jenis Pakaian
-    pakaian = df[["baju", "sarung", "celana", "kopyah"]].sum()
+    pakaian = df[["baju", "sarung", "celana", "jenis_lainnya"]].sum() # Changed 'kopyah' to 'jenis_lainnya'
     sheet.write("A3", "Jenis Pakaian")
     for i, (item, jumlah) in enumerate(pakaian.items()):
         sheet.write(i + 4, 0, item)
@@ -671,7 +671,7 @@ def menu_data_pelayanan():
     baju = st.number_input("Baju", min_value=0)
     sarung = st.number_input("Sarung", min_value=0)
     celana = st.number_input("Celana", min_value=0)
-    kopyah = st.number_input("Kopyah", min_value=0)
+    jenis_lainnya = st.number_input("Jenis Lainnya", min_value=0) # Changed 'kopyah' to 'jenis_lainnya'
     st.subheader("Jumlah Pinjaman Barang")
     jepit = st.number_input("Jepit", min_value=0)
     hanger = st.number_input("Hanger", min_value=0)
@@ -688,7 +688,7 @@ def menu_data_pelayanan():
         else:
             berhasil = simpan_data_pelayanan((
                 nama, daerah, kamar, bulan, tahun, hari_tanggal, waktu,
-                baju, sarung, celana, kopyah,
+                baju, sarung, celana, jenis_lainnya, # Changed 'kopyah' to 'jenis_lainnya'
                 jepit, hanger, timba,
                 no_kartu, ""
             ))
@@ -762,7 +762,7 @@ def menu_data_kehilangan():
 
     jenis = st.selectbox(
         "Jenis Barang yang Hilang",
-        ["Baju", "Sarung", "Celana", "Kopyah", "Jepit", "Hanger", "Timba", "Kartu"]
+        ["Baju", "Sarung", "Celana", "Jenis Lainnya", "Jepit", "Hanger", "Timba", "Kartu"] # Changed 'Kopyah' to 'Jenis Lainnya'
     )
     jumlah = st.number_input("Jumlah Barang yang Hilang", min_value=1, step=1)
     keterangan_hilang = st.text_area("Keterangan Kehilangan (Opsional)", "Tidak dikembalikan / Rusak / Hilang di gudang")
@@ -863,7 +863,7 @@ def menu_data_statistik():
     st.bar_chart(df["daerah"].value_counts(), use_container_width=True)
     
     st.subheader("2. Jenis Pakaian yang Terdata")
-    st.bar_chart(df[["baju", "sarung", "celana", "kopyah"]].sum(), use_container_width=True)
+    st.bar_chart(df[["baju", "sarung", "celana", "jenis_lainnya"]].sum(), use_container_width=True) # Changed 'kopyah' to 'jenis_lainnya'
     
     st.subheader("3. Pinjaman Barang")
     st.bar_chart(df[["jepit", "hanger", "timba"]].sum(), use_container_width=True)
