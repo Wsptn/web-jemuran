@@ -826,9 +826,8 @@ def menu_data_pelayanan():
     hari_tanggal = now.date()
     jam_menit = now.time()
     waktu = "Pagi" if time(6,30) <= jam_menit <= time(11,0) else \
-            "Siang" if time(11,0) < jam_menit <= time(16,0) else \
-            "Sore" if time(16,0) < jam_menit <= time(20,0) else \
-            "Malam" if time(20,0) < jam_menit or jam_menit <= time(6,30) else \
+            "Siang" if time(11,0) < jam_menit <= time(16,30) else \
+            "Malam" if time(20,0) < jam_menit or jam_menit <= time(1,00) else \
             "Tidak Tersedia"
 
     if waktu == "Tidak Tersedia":
