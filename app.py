@@ -968,7 +968,122 @@ def menu_update_status():
 
 
 # ==================== MENU: KEHILANGAN ==================== #
+# ==================== MENU: KEHILANGAN ==================== #
 def menu_data_kehilangan():
+    st.title("Data Kehilangan")
+
+    df_pelayanan = get_data("SELECT * FROM data_pelayanan")
+    
+    st.markdown("### ➕ Tambah Data Kehilangan")
+    st.info("Pilih data layanan jika kehilangan terkait dengan jemuran yang terdaftar. Ini akan menampilkan detail pakaian/barang pinjaman dari layanan tersebut.")
+    
+    # Check if 'id', 'nama_pemilik', 'no_kartu' columns exist before creating options
+    if not all(col in df_pelayanan.columns for col in ['id', 'nama_pemilik', 'no_kartu']):
+        st.error("Kolom 'id', 'nama_pemilik', atau 'no_kartu' tidak ditemukan dalam data pelayanan untuk pilihan kehilangan.")
+        pelayanan_options = ['Tidak Terkait Layanan']
+    else:
+        pelayanan_options = ['Tidak Terkait Layanan'] + [f"ID: {row['id']} - {row['nama_pemilik']} (Kartu: {row['no_kartu']})" for idx, row in df_pelayanan.iterrows()]
+
+    selected_option_for_loss_display = st.selectbox(
+        "Pilih Data Pelayanan yang Terkait Kehilangan",
+        pelayanan_options,
+        key="loss_data_selectbox"
+    )
+
+    id_pelayanan_to_save = None
+    selected_pelayanan_data = None # Untuk menyimpan data pelayanan yang dipilih
+    if selected_option_for_loss_display != 'Tidak Terkait Layanan':
+        try:
+            id_pelayanan_to_save = int(selected_option_for_loss_display.split(' ')[1])
+            selected_pelayanan_data = df_pelayanan[df_pelayanan["id"] == id_pelayanan_to_save].iloc[0]
+            st.write("Detail Data Pelayanan Terpilih:")
+            st.dataframe(selected_pelayanan_data.to_frame().T, use_container_width=True) # T.to_frame().T untuk menampilkan satu baris DataFrame dengan benar
+        except (IndexError, ValueError):
+            st.warning("Pilihan data pelayanan tidak valid.")
+            id_pelayanan_to_save = None
+
+    with st.form("form_tambah_kehilangan", clear_on_submit=True):
+        st.markdown("#### Masukkan Jumlah Barang yang Hilang")
+        st.info("Masukkan '0' jika tidak ada barang yang hilang dari jenis tersebut.")
+
+        # Inisialisasi nilai default
+        default_baju_hilang = 0
+        default_sarung_hilang = 0
+        default_celana_hilang = 0
+        default_jenis_lainnya_hilang = 0
+        default_kartu_hilang = 0
+
+        # Jika data pelayanan dipilih, inisialisasi dengan jumlah yang dipinjam/terdaftar
+        if selected_pelayanan_data is not None:
+            default_baju_hilang = selected_pelayanan_data['baju'] if pd.notna(selected_pelayanan_data['baju']) else 0
+            default_sarung_hilang = selected_pelayanan_data['sarung'] if pd.notna(selected_pelayanan_data['sarung']) else 0
+            default_celana_hilang = selected_pelayanan_data['celana'] if pd.notna(selected_pelayanan_data['celana']) else 0
+            default_jenis_lainnya_hilang = selected_pelayanan_data['jenis_lainnya'] if pd.notna(selected_pelayanan_data['jenis_lainnya']) else 0
+            # Untuk kartu, kita bisa asumsikan 1 jika ada nomor kartu dan status belum diambil
+            if selected_pelayanan_data['no_kartu'] and selected_pelayanan_data['ambil'] == 'Tidak':
+                default_kartu_hilang = 1
+
+        baju_hilang = st.number_input("Baju", min_value=0, value=int(default_baju_hilang), key="baju_hilang")
+        sarung_hilang = st.number_input("Sarung", min_value=0, value=int(default_sarung_hilang), key="sarung_hilang")
+        celana_hilang = st.number_input("Celana", min_value=0, value=int(default_celana_hilang), key="celana_hilang")
+        jenis_lainnya_hilang = st.number_input("Jenis Lainnya", min_value=0, value=int(default_jenis_lainnya_hilang), key="jenis_lainnya_hilang")
+        kartu_hilang = st.number_input("Kartu", min_value=0, value=int(default_kartu_hilang), key="kartu_hilang")
+        
+        keterangan_hilang = st.text_area("Keterangan Kehilangan (Opsional)", "Tidak dikembalikan / Rusak / Hilang", key="keterangan_hilang_form")
+
+        submitted_loss = st.form_submit_button("Simpan Data Kehilangan")
+
+        if submitted_loss:
+            # List untuk menyimpan informasi kehilangan
+            kehilangan_dicatat = []
+
+            if baju_hilang > 0:
+                if simpan_data_kehilangan(id_pelayanan_to_save, 'Baju', baju_hilang, keterangan_hilang):
+                    kehilangan_dicatat.append(f"{baju_hilang} Baju")
+            if sarung_hilang > 0:
+                if simpan_data_kehilangan(id_pelayanan_to_save, 'Sarung', sarung_hilang, keterangan_hilang):
+                    kehilangan_dicatat.append(f"{sarung_hilang} Sarung")
+            if celana_hilang > 0:
+                if simpan_data_kehilangan(id_pelayanan_to_save, 'Celana', celana_hilang, keterangan_hilang):
+                    kehilangan_dicatat.append(f"{celana_hilang} Celana")
+            if jenis_lainnya_hilang > 0:
+                if simpan_data_kehilangan(id_pelayanan_to_save, 'Jenis Lainnya', jenis_lainnya_hilang, keterangan_hilang):
+                    kehilangan_dicatat.append(f"{jenis_lainnya_hilang} Jenis Lainnya")
+            if kartu_hilang > 0:
+                if simpan_data_kehilangan(id_pelayanan_to_save, 'Kartu', kartu_hilang, keterangan_hilang):
+                    kehilangan_dicatat.append(f"{kartu_hilang} Kartu")
+            
+            if kehilangan_dicatat:
+                st.session_state.message_type = "success"
+                st.session_state.message_content = f"Data kehilangan berhasil disimpan: {', '.join(kehilangan_dicatat)}."
+            else:
+                st.session_state.message_type = "error"
+                st.session_state.message_content = "Tidak ada barang yang dicatat hilang atau terjadi kesalahan. Pastikan Anda memasukkan jumlah > 0 untuk barang yang hilang."
+            
+            st.rerun()
+
+    st.markdown("---")
+    st.markdown("### 📋 Riwayat Data Kehilangan")
+    df_kehilangan = get_data_kehilangan_lengkap()
+
+    if df_kehilangan.empty:
+        st.info("Belum ada data kehilangan yang tercatat.")
+        return
+
+    filter_nama = st.text_input("🔍 Filter berdasarkan Nama Pemilik (di riwayat kehilangan)", key="filter_nama_loss")
+    if filter_nama:
+        df_kehilangan = df_kehilangan[df_kehilangan["nama_pemilik"].str.contains(filter_nama, case=False, na=False, regex=True)]
+
+    if df_kehilangan.empty and filter_nama:
+        st.warning(f"Tidak ditemukan data kehilangan untuk '{filter_nama}'.")
+    else:
+        st.dataframe(df_kehilangan, use_container_width=True)
+
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df_kehilangan.to_excel(writer, index=False, sheet_name="Data Kehilangan")
+    writer.close()
+    st.download_button("📥 Export Data Kehilangan ke Excel", output.getvalue(), file_name="data_kehilangan.xlsx", mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     st.title("Data Kehilangan")
 
     df_pelayanan = get_data("SELECT * FROM data_pelayanan")
