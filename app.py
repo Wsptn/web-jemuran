@@ -31,119 +31,123 @@ DELETE_INTERVAL_MONTHS = 3 # Interval penghapusan berdasarkan waktu (3 bulan)
 WARNING_DAYS_BEFORE_DELETE = 7 # Notifikasi muncul 7 hari sebelum penghapusan 3 bulanan
 
 # ==================== STYLING ==================== #
-st.markdown("""
-<style>
-/* 1. GLOBAL FONT & BACKGROUND */
-html, body, [class*="css"] {
-    color: #212529 !important;
-    font-family: 'Segoe UI', sans-serif !important;
-    background-color: #f5f6fa !important;
-}
+def set_custom_css():
+    st.markdown("""
+    <style>
+    /* 1. GLOBAL FONT & BACKGROUND */
+    html, body, [class*="css"] {
+        color: #212529 !important;
+        font-family: 'Segoe UI', sans-serif !important;
+        background-color: #f5f6fa !important;
+    }
 
-/* 2. NAVBAR */
-.main-title {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    background-color: #0d6efd;
-    color: white;
-    font-size: 22px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    padding-left: 25px;
-    z-index: 9999;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-/* 3. SIDEBAR */
-section[data-testid="stSidebar"] {
-    padding: 0 !important;
-    border-right: 1px solid #dee2e6;
-    z-index: 100;
-}
-
-section[data-testid="stSidebar"] > div:first-child {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-section[data-testid="stSidebar"] > div:first-child > div:nth-child(1) {
-    background-color: #0d6efd;
-    height: 65px;
-}
-
-section[data-testid="stSidebar"] > div:first-child > div:nth-child(2) {
-    background-color: white;
-    flex-grow: 1;
-    padding: 1rem;
-    overflow-y: auto;
-}
-
-/* 4. TEKS DI SIDEBAR */
-section[data-testid="stSidebar"] > div:first-child {
-    padding-bottom: 70px !important;
-}
-
-/* 5. KONTEN UTAMA */
-.block-container {
-    background-color: #f5f6fa !important;
-    padding-top: 90px !important;
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
-
-/* 6. FORM INPUT, DROPDOWN, TEXTAREA */
-input, select, textarea {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-    border: 1px solid #212529 !important;
-    border-radius: 5px !important;
-}
-
-/* 7. LABEL & TEKS */
-label, h1, h2, h3, h4, h5, h6, p, span, div {
-    color: #212529 !important;
-}
-
-/* 8. TOMBOL */
-button[kind="primary"] {
-    background-color: #0d6efd !important;
-    color: white !important;
-    border-radius: 5px !important;
-}
-
-/* 9. FOOTER */
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f8f9fa;
-    color: #6c757d;
-    text-align: center;
-    padding: 10px;
-    font-size: 14px;
-    border-top: 1px solid #dee2e6;
-    z-index: 9999;
-}
-
-/* 10. RESPONSIVE FIX (Mobile) */
-@media screen and (max-width: 768px) {
+    /* 2. NAVBAR */
     .main-title {
-        font-size: 18px;
-        padding-left: 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 65px;
+        background-color: #0d6efd;
+        color: white;
+        font-size: 22px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        padding-left: 25px;
+        z-index: 9999;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
+
+    /* 3. SIDEBAR */
+    section[data-testid="stSidebar"] {
+        padding: 0 !important;
+        border-right: 1px solid #dee2e6;
+        z-index: 100;
+    }
+
+    section[data-testid="stSidebar"] > div:first-child {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    section[data-testid="stSidebar"] > div:first-child > div:nth-child(1) {
+        background-color: #0d6efd;
+        height: 65px;
+    }
+
+    section[data-testid="stSidebar"] > div:first-child > div:nth-child(2) {
+        background-color: white;
+        flex-grow: 1;
+        padding: 1rem;
+        overflow-y: auto;
+    }
+
+    /* 4. TEKS DI SIDEBAR */
+    section[data-testid="stSidebar"] > div:first-child {
+        padding-bottom: 70px !important;
+    }
+
+    /* 5. KONTEN UTAMA */
     .block-container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+        background-color: #f5f6fa !important;
+        padding-top: 90px !important;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
-}
-</style>
-""", unsafe_allow_html=True)
+
+    /* 6. FORM INPUT, DROPDOWN, TEXTAREA */
+    input, select, textarea {
+        background-color: #ffffff !important;
+        color: #212529 !important;
+        border: 1px solid #212529 !important;
+        border-radius: 5px !important;
+    }
+
+    /* 7. LABEL & TEKS */
+    label, h1, h2, h3, h4, h5, h6, p, span, div {
+        color: #212529 !important;
+    }
+
+    /* 8. TOMBOL */
+    button[kind="primary"] {
+        background-color: #0d6efd !important;
+        color: white !important;
+        border-radius: 5px !important;
+    }
+
+    /* 9. FOOTER */
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f8f9fa;
+        color: #6c757d;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        border-top: 1px solid #dee2e6;
+        z-index: 9999;
+    }
+
+    /* 10. RESPONSIVE FIX (Mobile) */
+    @media screen and (max-width: 768px) {
+        .main-title {
+            font-size: 18px;
+            padding-left: 15px;
+        }
+        .block-container {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+st.set_page_config(page_title="WEB JEMURAN ENJE", layout="centered")
+set_custom_css() # Call the function here
 
 st.markdown("<div class='main-title'>Sistem Informasi Jemuran Pesantren</div>", unsafe_allow_html=True)
 
@@ -235,9 +239,14 @@ def simpan_data_pelayanan(data):
             return False
 
         # Kurangi stok_tersedia untuk barang pinjaman
-        cursor.execute("UPDATE stok_pinjaman SET stok_tersedia = stok_tersedia - %s WHERE nama_barang = 'Jepit'", (data[11],))
-        cursor.execute("UPDATE stok_pinjaman SET stok_tersedia = stok_tersedia - %s WHERE nama_barang = 'Hanger'", (data[12],))
-        cursor.execute("UPDATE stok_pinjaman SET stok_tersedia = stok_tersedia - %s WHERE nama_barang = 'Timba'", (data[13],))
+        # Pastikan data[11], data[12], data[13] adalah integer atau dapat dikonversi ke integer
+        jepit_val = int(data[11]) if data[11] is not None else 0
+        hanger_val = int(data[12]) if data[12] is not None else 0
+        timba_val = int(data[13]) if data[13] is not None else 0
+
+        cursor.execute("UPDATE stok_pinjaman SET stok_tersedia = stok_tersedia - %s WHERE nama_barang = 'Jepit'", (jepit_val,))
+        cursor.execute("UPDATE stok_pinjaman SET stok_tersedia = stok_tersedia - %s WHERE nama_barang = 'Hanger'", (hanger_val,))
+        cursor.execute("UPDATE stok_pinjaman SET stok_tersedia = stok_tersedia - %s WHERE nama_barang = 'Timba'", (timba_val,))
 
         # Masukkan data pelayanan baru
         query = """
@@ -293,7 +302,7 @@ def update_data_pelayanan(id_data, data_baru):
         # Logika untuk mengunci input pakaian/pinjaman jika status sudah 'Iya' atau 'Direlokasi'
         # Input pakaian/pinjaman TIDAK akan berubah jika status sudah 'Iya' atau 'Direlokasi'
         # dan TIDAK ada perubahan status kembali ke 'Tidak'
-        if old_ambil in ['Iya', 'Direlokasi'] and data_baru.get('ambil') != 'Tidak':
+        if old_ambil in ['Iya', 'Direlokasi'] and data_baru.get('ambil') != 'Tidak': # Assuming 'ambil' status is passed in data_baru for comparison
             new_baju = old_baju
             new_sarung = old_sarung
             new_celana = old_celana
@@ -329,8 +338,8 @@ def update_data_pelayanan(id_data, data_baru):
         total_pinjaman_lama = old_jepit + old_hanger + old_timba
 
         # Tentukan status 'ambil' baru dan tanggal pengambilan untuk disimpan ke DB
-        status_ambil_baru = old_ambil
-        tanggal_pengambilan_untuk_db = new_tgl_pengambilan # Default dari input form
+        status_ambil_baru = old_ambil # Start with old status
+        tanggal_pengambilan_untuk_db = new_tgl_pengambilan # Default from form input
 
         if new_relokasi and new_relokasi.strip() != "":
             status_ambil_baru = "Direlokasi"
@@ -350,7 +359,10 @@ def update_data_pelayanan(id_data, data_baru):
                 status_ambil_baru = "Iya" # Diambil semua
                 if tanggal_pengambilan_untuk_db is None:
                     tanggal_pengambilan_untuk_db = datetime.now().date()
-        
+        else: # If no items are taken or relocated, and numbers haven't changed to zero, keep old status
+            status_ambil_baru = old_ambil
+            tanggal_pengambilan_untuk_db = old_tgl_pengambilan # Keep the old date if status doesn't change
+
         # Logika tambahan: Jika status berubah kembali ke 'Tidak', reset tgl_pengambilan ke NULL
         if status_ambil_baru == 'Tidak' and old_ambil != 'Tidak':
             tanggal_pengambilan_untuk_db = None
@@ -439,7 +451,7 @@ def update_status_ambil(id_data, jepit_kembali, hanger_kembali, timba_kembali):
                 cursor.execute("INSERT INTO data_kehilangan (id_pelayanan, jenis_barang, jumlah_hilang, keterangan) VALUES (%s, 'Jepit', %s, 'Tidak dikembalikan')", (id_data, jepit_hilang))
             if hanger_hilang > 0:
                 cursor.execute("INSERT INTO data_kehilangan (id_pelayanan, jenis_barang, jumlah_hilang, keterangan) VALUES (%s, 'Hanger', %s, 'Tidak dikembalikan')", (id_data, hanger_hilang))
-            if timba_hilang > 0:
+            if timba_hilang > 0: # Pastikan ini menggunakan timba_hilang untuk pengecekan pengurangan
                 cursor.execute("INSERT INTO data_kehilangan (id_pelayanan, jenis_barang, jumlah_hilang, keterangan) VALUES (%s, 'Timba', %s, 'Tidak dikembalikan')", (id_data, timba_hilang))
 
             # Perbarui status 'ambil' dan set tgl_pengambilan di data_pelayanan
@@ -497,12 +509,17 @@ def simpan_data_kehilangan(id_pelayanan, jenis_barang, jumlah_hilang, keterangan
         # Validasi jika id_pelayanan diberikan (bukan 'Tidak Terkait Layanan')
         if id_pelayanan is not None:
             # Ambil jumlah barang yang dipinjam dari data_pelayanan untuk id_pelayanan tersebut
-            cursor.execute(f"SELECT {jenis_barang.lower()} FROM data_pelayanan WHERE id = %s", (id_pelayanan,))
-            jumlah_dipinjam_result = cursor.fetchone()
+            # Ensure the column name matches the database (e.g., 'jepit', 'hanger', 'timba')
+            if jenis_barang.lower() not in ['jepit', 'hanger', 'timba']:
+                # For non-borrowed items (baju, sarung, etc.), no need for 'jumlah_dipinjam' check
+                jumlah_dipinjam = float('inf') # Set to infinity so loss is always valid
+            else:
+                cursor.execute(f"SELECT {jenis_barang.lower()} FROM data_pelayanan WHERE id = %s", (id_pelayanan,))
+                jumlah_dipinjam_result = cursor.fetchone()
 
-            jumlah_dipinjam = 0
-            if jumlah_dipinjam_result:
-                jumlah_dipinjam = jumlah_dipinjam_result[0] if jumlah_dipinjam_result[0] is not None else 0
+                jumlah_dipinjam = 0
+                if jumlah_dipinjam_result:
+                    jumlah_dipinjam = jumlah_dipinjam_result[0] if jumlah_dipinjam_result[0] is not None else 0
 
             # Jika jenis barang adalah barang pinjaman (Jepit, Hanger, Timba)
             if jenis_barang in ['Jepit', 'Hanger', 'Timba'] and jumlah_dipinjam == 0:
@@ -626,15 +643,10 @@ def export_excel(df, filename):
 
     workbook = writer.book
     
-    if "Ringkasan" not in workbook.sheetnames:
-        sheet = workbook.add_worksheet("Ringkasan")
-        writer.sheets["Ringkasan"] = sheet
-    else:
-        sheet = workbook.get_worksheet_by_name("Ringkasan")
-        if sheet is None:
-            sheet = workbook.add_worksheet("Ringkasan")
-            writer.sheets["Ringkasan"] = sheet
-
+    # Check if 'Ringkasan' sheet exists, if not, create it.
+    # This part can be simplified as writer.sheets will create it if not present.
+    sheet = workbook.add_worksheet("Ringkasan")
+    
     # 1. Total Pengguna
     total_pengguna = df["nama_pemilik"].nunique()
     sheet.write("A1", "Total Pengguna")
@@ -763,11 +775,13 @@ def check_and_trigger_auto_delete():
     last_auto_delete_run = datetime.fromisoformat(last_auto_delete_run_str).date() if last_auto_delete_run_str else None
     next_3_month_delete_schedule = datetime.fromisoformat(next_3_month_delete_schedule_str).date() if next_3_month_delete_schedule_str else None
 
+    # Calculate or update next_3_month_delete_schedule
     if next_3_month_delete_schedule is None or next_3_month_delete_schedule <= current_date:
         start_date_for_next_schedule = last_auto_delete_run if last_auto_delete_run else current_date
         next_3_month_schedule_temp = start_date_for_next_schedule + pd.DateOffset(months=DELETE_INTERVAL_MONTHS)
         next_3_month_delete_schedule = next_3_month_schedule_temp.date()
         
+        # Ensure the next schedule is in the future relative to current_date
         while next_3_month_delete_schedule <= current_date:
             next_3_month_schedule_temp += pd.DateOffset(months=DELETE_INTERVAL_MONTHS)
             next_3_month_delete_schedule = next_3_month_schedule_temp.date()
@@ -807,6 +821,7 @@ def check_and_trigger_auto_delete():
         st.session_state.message_content = f"Pembersihan data otomatis selesai: {delete_message}"
         st.session_state.auto_delete_performed_this_session = True
         
+        # Update last_auto_delete_run and next_3_month_delete_schedule after a successful deletion
         update_app_setting('last_auto_delete_run', datetime.now().isoformat())
         new_next_schedule_temp = datetime.now().date() + pd.DateOffset(months=DELETE_INTERVAL_MONTHS)
         new_next_schedule = new_next_schedule_temp.date()
@@ -908,6 +923,11 @@ def menu_update_status():
     
     st.write("Daftar Jemuran yang Belum Diambil:")
     
+    # Check if 'id', 'nama_pemilik', 'no_kartu' columns exist before creating options
+    if not all(col in df.columns for col in ['id', 'nama_pemilik', 'no_kartu']):
+        st.error("Kolom 'id', 'nama_pemilik', atau 'no_kartu' tidak ditemukan dalam data pelayanan. Pastikan skema database Anda sudah benar.")
+        return
+
     selectbox_options = [f"ID: {row['id']} - {row['nama_pemilik']} (Kartu: {row['no_kartu']})" for idx, row in df.iterrows()]
     
     selected_option_str = st.selectbox(
@@ -956,7 +976,13 @@ def menu_data_kehilangan():
     st.markdown("### ➕ Tambah Data Kehilangan")
     st.info("Pilih data layanan jika kehilangan terkait dengan jemuran yang terdaftar. Jika tidak, pilih 'Tidak Terkait Layanan'.")
     
-    pelayanan_options = ['Tidak Terkait Layanan'] + [f"ID: {row['id']} - {row['nama_pemilik']} (Kartu: {row['no_kartu']})" for idx, row in df_pelayanan.iterrows()]
+    # Check if 'id', 'nama_pemilik', 'no_kartu' columns exist before creating options
+    if not all(col in df_pelayanan.columns for col in ['id', 'nama_pemilik', 'no_kartu']):
+        st.error("Kolom 'id', 'nama_pemilik', atau 'no_kartu' tidak ditemukan dalam data pelayanan untuk pilihan kehilangan.")
+        pelayanan_options = ['Tidak Terkait Layanan']
+    else:
+        pelayanan_options = ['Tidak Terkait Layanan'] + [f"ID: {row['id']} - {row['nama_pemilik']} (Kartu: {row['no_kartu']})" for idx, row in df_pelayanan.iterrows()]
+
     selected_option_for_loss_display = st.selectbox(
         "Pilih Data Pelayanan yang Terkait Kehilangan",
         pelayanan_options,
@@ -1041,7 +1067,13 @@ def menu_data_statistik():
         df = df[df["no_kartu"].astype(str).str.contains(filter_no_kartu, case=False, na=False)]
 
     # Convert date columns
-    df["hari_tanggal"] = pd.to_datetime(df["hari_tanggal"]) 
+    # Ensure 'hari_tanggal' exists and convert it
+    if "hari_tanggal" in df.columns:
+        df["hari_tanggal"] = pd.to_datetime(df["hari_tanggal"]) 
+    else:
+        st.error("Kolom 'hari_tanggal' tidak ditemukan di data. Pastikan skema database Anda sudah benar.")
+        return # Exit if essential column is missing
+
     if "tgl_pengambilan" in df.columns:
         df["tgl_pengambilan"] = pd.to_datetime(df["tgl_pengambilan"])
     else:
@@ -1050,15 +1082,18 @@ def menu_data_statistik():
 
     # Filter Lainnya (non-tanggal)
     for col in ["daerah", "ambil", "bulan", "tahun", "waktu"]:
-        unique_values = df[col].astype(str).unique()
-        if col == "tahun":
-            unique_values = sorted(unique_values, reverse=True)
+        if col in df.columns: # Check if column exists before trying to filter
+            unique_values = df[col].astype(str).unique()
+            if col == "tahun":
+                unique_values = sorted(unique_values, reverse=True)
+            else:
+                unique_values = sorted(unique_values) 
+            
+            pilih = st.sidebar.multiselect(col.replace("_", " ").title(), unique_values, key=f"filter_{col}_statistik")
+            if pilih:
+                df = df[df[col].astype(str).isin(pilih)]
         else:
-            unique_values = sorted(unique_values) 
-        
-        pilih = st.sidebar.multiselect(col.replace("_", " ").title(), unique_values, key=f"filter_{col}_statistik")
-        if pilih:
-            df = df[df[col].astype(str).isin(pilih)]
+            st.warning(f"Kolom '{col}' tidak ditemukan dalam data pelayanan. Filter untuk kolom ini tidak akan tersedia.")
 
     # ========== Notifikasi Otomatis Jika Melebihi 2 Hari ==========
     st.subheader("🔔 Notifikasi Relokasi Otomatis (Jemuran Melebihi 2 Hari)")
@@ -1118,18 +1153,22 @@ def menu_data_statistik():
         )
 
         st.markdown("#### ➕ Tambah Stok Barang")
-        nama_barang_tambah = st.selectbox("Pilih Barang", stok_df["nama_barang"].unique(), key="add_stok_select")
-        jumlah_tambah = st.number_input("Jumlah Tambahan Stok", min_value=1, step=1, key="add_stok_amount")
+        # Ensure that `stok_df` is not empty before attempting to access its unique values
+        if not stok_df.empty:
+            nama_barang_tambah = st.selectbox("Pilih Barang", stok_df["nama_barang"].unique(), key="add_stok_select")
+            jumlah_tambah = st.number_input("Jumlah Tambahan Stok", min_value=1, step=1, key="add_stok_amount")
 
-        if st.button("Tambah Stok Barang", key="add_stok_button"):
-            if tambah_stok_barang(nama_barang_tambah, jumlah_tambah):
-                st.session_state.message_type = "success"
-                st.session_state.message_content = f"Stok barang '{nama_barang_tambah}' berhasil ditambah sebanyak {jumlah_tambah}."
-            else:
-                st.session_state.message_type = "error"
-                st.session_state.message_content = "Gagal menambah stok barang. Silakan coba lagi."
-            st.rerun()
-        
+            if st.button("Tambah Stok Barang", key="add_stok_button"):
+                if tambah_stok_barang(nama_barang_tambah, jumlah_tambah):
+                    st.session_state.message_type = "success"
+                    st.session_state.message_content = f"Stok barang '{nama_barang_tambah}' berhasil ditambah sebanyak {jumlah_tambah}."
+                else:
+                    st.session_state.message_type = "error"
+                    st.session_state.message_content = "Gagal menambah stok barang. Silakan coba lagi."
+                st.rerun()
+        else:
+            st.info("Tidak ada data stok barang yang tersedia untuk ditambahkan. Pastikan tabel stok_pinjaman sudah terisi.")
+            
         st.subheader("7. Total Pengguna Unik")
         st.info(f"Terdapat **{df['nama_pemilik'].nunique()}** pengguna unik yang terdata.")
         
@@ -1205,7 +1244,7 @@ def menu_data_statistik():
                             key=f"edit_tgl_pengambilan_{selected_row_id_edit}"
                         )
                     else:
-                        edit_tgl_pengambilan = None # Set None jika input tidak ditampilkan
+                        edit_tgl_pengambilan = None # Set None if input is not displayed
 
 
                     submit_edit_button = st.form_submit_button("Simpan Perubahan")
@@ -1262,6 +1301,7 @@ with st.sidebar:
         }
     )
 
+# Display messages before rendering the main menu content
 if st.session_state.message_type == "success":
     st.success(st.session_state.message_content)
 elif st.session_state.message_type == "error":
@@ -1269,6 +1309,7 @@ elif st.session_state.message_type == "error":
 elif st.session_state.message_type == "info":
     st.info(st.session_state.message_content)
 
+# Clear messages after they are displayed
 st.session_state.message_type = None
 st.session_state.message_content = ""
 st.session_state.auto_delete_performed_this_session = False
